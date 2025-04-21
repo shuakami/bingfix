@@ -1,25 +1,27 @@
-# Bing Fix UserScript (Bing 搜索区域修复脚本)
+# Bing Fix UserScript - 绕过 Bing 搜索区域限制
 
-一个简单的用户脚本 (UserScript)，旨在解决在使用网络代理访问 Bing (必应) 搜索时，因区域限制导致无法获得预期搜索结果 (例如提示"没有与此相关的结果...检查拼写或尝试其他关键字") 的问题。
+本用户脚本 (UserScript) 用于解决在代理环境下访问 Bing (必应) 搜索时，可能遇到的因区域识别导致搜索结果不全或返回“没有与此相关的结果”的问题。
 
-## 背景
 
-当您通过代理服务器访问 Bing 搜索时，Bing 可能会根据代理服务器的 IP 地址判断您所在的区域，并可能因此返回不相关或受限的搜索结果。此脚本通过注入特定的 HTTP 请求头来模拟美国用户的访问，从而绕过这种限制。
+当通过部分代理访问 Bing 时，服务器可能根据代理 IP 判断用户区域，并据此提供本地化或受限的搜索内容。此脚本旨在绕过这种限制，获取更广泛的搜索结果。
 
-## 功能
+## 实现原理
 
-*   自动为 `bing.com/search` 的 AJAX 请求注入以下 HTTP 头部信息：
-    *   `X-Forwarded-For: 8.8.8.8` (模拟来自 Google 公共 DNS 的请求)
-    *   `Accept-Language: en-US,en;q=0.9` (指定接受语言为美式英语)
-*   帮助获取更符合预期的、通常是基于美国地区的搜索结果。
-*   脚本在 `https://www.bing.com/search*` 页面自动运行。
+脚本通过拦截 `bing.com/search` 页面的网络请求 (AJAX)，并自动注入以下 HTTP 头部信息来实现：
 
-## 安装
+*   `X-Forwarded-For: 8.8.8.8`：模拟一个常见的公共 IP 地址来源。
+*   `Accept-Language: en-US,en;q=0.9`：优先请求英文内容。
 
-1.  **安装用户脚本管理器:** 您需要在浏览器中安装一个用户脚本管理器扩展。常见的选择有：
-    *   [Tampermonkey (油猴)](https://www.tampermonkey.net/) (支持 Chrome, Firefox, Edge, Opera, Safari 等主流浏览器)
-    *   [Greasemonkey (暴力猴)](https://www.greasespot.net/) (主要用于 Firefox)
-    *   Violentmonkey (支持 Chrome, Firefox, Edge, Opera)
-2.  **安装此脚本:**
-    *   **推荐方式:** 点击本仓库中的 `Bing Fix-0.1.user.js` 文件，您的用户脚本管理器通常会自动弹出安装提示。
-    *   **手动方式:** 复制 `Bing Fix-0.1.user.js` 文件中的全部代码，在您的用户脚本管理器中选择"添加新脚本"，然后将代码粘贴进去并保存。
+通过这种方式，模拟来自特定区域（通常是美国）的访问，从而获取不同的搜索结果集。
+
+## 安装步骤
+
+1.  **安装用户脚本管理器**：您需要一个浏览器扩展来运行用户脚本。推荐使用：
+    *   [Tampermonkey](https://www.tampermonkey.net/) (支持 Chrome, Firefox, Edge, Safari 等)
+    *   [Violentmonkey](https://violentmonkey.github.io/) (开源，支持多款浏览器)
+    *   [Greasemonkey](https://www.greasespot.net/) (主要用于 Firefox)
+    *(请根据您的浏览器选择并安装)*
+
+2.  **安装本脚本**：
+    *   **推荐**: 直接点击仓库中的 `Bing Fix-0.1.user.js` 文件链接，用户脚本管理器通常会自动识别并提示安装。
+    *   **手动**: 复制 `Bing Fix-0.1.user.js` 文件的代码，在用户脚本管理器中新建脚本，将代码粘贴并保存。
